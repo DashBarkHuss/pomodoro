@@ -1,0 +1,9 @@
+#inputs{
+    border: 1px solid green;
+}
+.input{
+    border: 1px solid red;
+}
+#timeDisplay{
+    border: 1px solid blue;
+}
