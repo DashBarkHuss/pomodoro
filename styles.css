@@ -1,8 +1,18 @@
 #inputs{
     border: 1px solid green;
+    display: grid;
+    grid-template-columns: 200px fit-content(100%) fit-content(100%);
+    grid-gap: 10px;
 }
 .input{
     border: 1px solid red;
+    grid-column-start: 1;
+}
+.removeInput{
+
+}
+.addInput{
+
 }
 #timeDisplay{
     border: 1px solid blue;
