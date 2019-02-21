@@ -9,26 +9,20 @@
         this.inputs.id = "inputs";
         this.inputs.innerHTML = "inputs";
         this.el.appendChild(this.inputs);
-        
-        // function createInputs(numberOfInputs = 2){
-        //     for (i = inputs.children.length; i<numberOfInputs; i++){
-        //         this.input = document.createElement("input");
-        //         this.input.className = "input";
-        //         this.input.innerHTML = "input";
-        //         this.inputs.appendChild(this.input);
-        //     }
-        // }
-        function createInputs(numberOfInputs = 2){
-            for (i = inputs.children.length; i<numberOfInputs; i++){
-                let input = makeElem("input", "input");
-                this.inputs.appendChild(input);
-                let removeInput = makeElem("button", "removeInput", "remove");
-                this.inputs.appendChild(removeInput);
-                let addInput = makeElem("button", "addInput", "+");
-                this.inputs.appendChild(addInput);
-            }
-        }
 
+        this.intervals={};
+        
+        function createInput(numberOfInputs = 1){
+            let elems = document.createDocumentFragment();
+            for (i = 0; i<numberOfInputs; i++){
+                let input = makeElem("input", "input");
+                let removeInput = makeElem("button", "removeInput", "remove");
+                let addInput = makeElem("button", "addInput", "+");
+                elems.append(input, removeInput, addInput);
+            }
+            return elems;
+        }
+        
         //makes any element
         function makeElem(type, className, text=""){
             let elem = document.createElement(type);
@@ -36,9 +30,10 @@
             elem.innerHTML = text;
             return elem
         }
-
-        createInputs();
-
+        
+        //start with two input elements
+        this.inputs.append(createInput(2));
+        
         
         //create submit button
         this.submit = document.createElement("button");
@@ -46,45 +41,69 @@
         this.submit.innerHTML = "submit";
         this.el.appendChild(this.submit);
         
+        //create lower add button
         this.addInput = document.createElement("button");
         this.addInput.id = "submitIntervals";
         this.addInput.innerHTML = "add";
         this.el.appendChild(this.addInput);
         
-        // add input
+        // lower add button input
         this.addInput.addEventListener('click', ()=>{
-            createInputs(inputs.children.length+1);
+            this.inputs.append(createInput());
+            addEventListeners();
         });
-        function add(e){
-            let elems = new DocumentFragment();
-            makeElem;
-            // elems.push(makeElem("input","input"), makeElem("button","button"))
-            // this.parentElement.insertBefore(elems, makeElem("input","input"), this.nextSibling);
-    
-            
-    
-             
-            debugger;
+        
+        //add Input after this input 
+        function addAfter(e){
+            this.parentElement.insertBefore(createInput(), this.nextSibling);  
+            addEventListeners();
         };
-
-       document.querySelectorAll(".addInput").forEach((x)=>x.addEventListener('click', add));
-
-    
         //removeInput
+        function remove(e){ //this function wouldn't work if the html order was switched
+        this.nextSibling.remove();
+        this.previousSibling.remove();
+        this.remove();
+    }
+    //get interval on submit
+    function saveIntervals(){
+        calcInputs.bind(this)();
+        console.log(this.inputValues);
+        if(this.inputValues.length%2!=0){alert('must have one more break'); return;};
+        //save intervals into interval object
+        let work = this.inputValues.filter((x,i)=>{
+            return i%2 ==0;
+        });
+        let breaks = this.inputValues.filter((x,i)=>{
+            return i%2 !=0;
+        });
+        
+        console.log(work, breaks);
+        this.intervals.work = work;
+        this.intervals.breaks = breaks;
+        console.log(this.intervals);
+    }
+    function addEventListeners(){
+        document.querySelectorAll(".addInput").forEach((x)=>x.addEventListener('click', addAfter));
+        document.querySelectorAll(".removeInput").forEach((x)=>x.addEventListener('click', remove));
+    }   
+    
+    addEventListeners();
+    
+    function calcInputs(){
+        this.inputValues = (()=>{
+            var array = [];
+            document.querySelectorAll(".input").forEach((x)=>{
+                debugger; //left off trying to figure out how to through empty fields
+                array.push(parseInt(x.value));
+            });
+            return array;
+        })();
+        
+    }
 
-        
-        
-        // let addInput = createInputs(inputs.chil)
-
-        // this.input2 = document.createElement("input");
-        // this.input2.class = ".input";
-        // this.input2.innerHTML = "input";
-        // this.inputs.appendChild(this.input2);
-        
-        //add work interval
-        //add add break interval
-        
-        //get interval on submit
+    this.submit.addEventListener('click', saveIntervals.bind(this));
+    
+    
         //create pomodor with intervals
         // save intervals into an object that contains two arrays: work intervals and break intervals.
        
@@ -101,7 +120,6 @@
         //creates control divs or calls controls which does that
         //loops: intervals.work[i], followed by intervals.break[i], reset i to 0 if it's the last i
     };
-    
 //controls
     window.Pomodoro = Pomodoro;
 })(window);
