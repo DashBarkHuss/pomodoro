@@ -1,11 +1,35 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+  .invisible{
+    display: none;
+    border: 1px solid blue;
+}
+#pomodoro_div{
+    /* border: 1px solid green; */
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 10px;
+    height: 100%;
+    align-content: center;
+}
 #inputs{
-    border: 1px solid green;
+    grid-column-start: 1;
+    grid-column-end: 9;
+    /* border: 1px solid green; */
     display: grid;
     grid-template-columns: 200px fit-content(100%) fit-content(100%);
     grid-gap: 10px;
+    justify-content: center;
 }
 .input{
-    border: 1px solid red;
+    /* border: 1px solid red; */
     grid-column-start: 1;
 }
 .removeInput{
@@ -17,3 +41,18 @@
 #timeDisplay{
     border: 1px solid blue;
 }
+
+#submitIntervals{
+    justify-self: center;
+    grid-column-start: 4;
+}
+#addInput{
+    justify-self: center; 
+}
+
+#intervalsDisplay{
+    grid-column: 1/9;
+    display: grid;
+    justify-content: center;
+}
+

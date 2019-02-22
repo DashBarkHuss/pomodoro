@@ -2,21 +2,19 @@
     //Pomodoro
     var Pomodoro = function(el){
         this.el = document.getElementById(el);
-        this.el.innerHTML ="hi";
-        console.log(this.el);
         //create interval inputs
         this.inputs = document.createElement("div");
         this.inputs.id = "inputs";
-        this.inputs.innerHTML = "inputs";
+        this.inputs.innerHTML = "Sumbit Intervals";
         this.el.appendChild(this.inputs);
 
         this.intervals={};
         
-        function createInput(numberOfInputs = 1){
+        function createInput(numberOfInputs = 1){ //refactor this to make two inputs with .work class and .breaks
             let elems = document.createDocumentFragment();
-            for (i = 0; i<numberOfInputs; i++){
+            for (var i = 0; i<numberOfInputs; i++){
                 let input = makeElem("input", "input");
-                let removeInput = makeElem("button", "removeInput", "remove");
+                let removeInput = makeElem("button", "removeInput", "-");
                 let addInput = makeElem("button", "addInput", "+");
                 elems.append(input, removeInput, addInput);
             }
@@ -43,7 +41,7 @@
         
         //create lower add button
         this.addInput = document.createElement("button");
-        this.addInput.id = "submitIntervals";
+        this.addInput.id = "addInput";
         this.addInput.innerHTML = "add";
         this.el.appendChild(this.addInput);
         
@@ -64,20 +62,47 @@
         this.previousSibling.remove();
         this.remove();
     }
-    //get interval on submit
-    function saveIntervals(){
+
+    //get intervals on submit
+    function submit(){
+        //get inputs
         calcInputs.bind(this)();
-        console.log(this.inputValues);
+
+        //validate inputs
+        let error = false;
         const validate = (function(){
-                if(this.inputValues.length == 0){
+            if(this.inputValues.length == 0){
                 alert('You must submit atleast one work interval and one break interval.'); 
-                return;
+                error = true;
             }else if (this.inputValues.length%2!=0){
                 alert(`Must have one break after work session of ${this.inputValues[this.inputValues.length-1]} minutes.`); 
-                return;
+                error = true;
             }
-        }).bind(this)();;
-        //save intervals into interval object
+        }).bind(this)();
+        //display inputs
+        function displayIntervals(intervals){
+            let displayIntDiv = document.createElement("div");
+            displayIntDiv.id = "intervalsDisplay";
+            let divs = "";
+            //work 0, break 0, work1, break 1
+            let work = intervals.work.map((x)=>{return `Work: ${x} minutes`});
+            let breaks = intervals.breaks.map((x)=>{return `Break: ${x} minutes`});
+            for (i=0; i<work.length; i++){
+                 divs += `<div>${work[i]}</div><div> ${breaks[i]}</div>`;
+            }
+            
+            displayIntDiv.innerHTML = divs;
+            console.log(this);
+            console.log(displayIntDiv);
+            //clear everything
+            this.inputs.classList.add('invisible'); //not overiding the inputs id display property
+            this.submit.classList.add('invisible');
+            this.addInput.classList.add('invisible');
+            this.el.appendChild(displayIntDiv);
+        }
+        if (error){return};
+
+        //save inputs into interval object
         let work = this.inputValues.filter((x,i)=>{
             return i%2 ==0;
         });
@@ -85,10 +110,10 @@
             return i%2 !=0;
         });
         
-        console.log(work, breaks);
         this.intervals.work = work;
         this.intervals.breaks = breaks;
-        console.log(this.intervals);
+        displayIntervals.bind(this)(this.intervals)
+        
     }
     function addEventListeners(){
         document.querySelectorAll(".addInput").forEach((x)=>x.addEventListener('click', addAfter));
@@ -109,7 +134,7 @@
         
     }
 
-    this.submit.addEventListener('click', saveIntervals.bind(this));
+    this.submit.addEventListener('click', submit.bind(this));
     
     
         //create pomodor with intervals
