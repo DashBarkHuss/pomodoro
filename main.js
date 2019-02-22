@@ -68,7 +68,15 @@
     function saveIntervals(){
         calcInputs.bind(this)();
         console.log(this.inputValues);
-        if(this.inputValues.length%2!=0){alert('must have one more break'); return;};
+        const validate = (function(){
+                if(this.inputValues.length == 0){
+                alert('You must submit atleast one work interval and one break interval.'); 
+                return;
+            }else if (this.inputValues.length%2!=0){
+                alert(`Must have one break after work session of ${this.inputValues[this.inputValues.length-1]} minutes.`); 
+                return;
+            }
+        }).bind(this)();;
         //save intervals into interval object
         let work = this.inputValues.filter((x,i)=>{
             return i%2 ==0;
@@ -93,7 +101,7 @@
         this.inputValues = (()=>{
             var array = [];
             document.querySelectorAll(".input").forEach((x)=>{
-                debugger; //left off trying to figure out how to through empty fields
+                if(x.value.length==0) return;
                 array.push(parseInt(x.value));
             });
             return array;
