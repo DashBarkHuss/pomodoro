@@ -80,30 +80,6 @@
             }
         }).bind(this)();
 
-        //display inputs
-        function displayIntervals(intervals){
-            let displayIntDiv = document.createElement("div");
-            displayIntDiv.id = "intervalsDisplay";
-            let divs = "";
-            let work = intervals.work.map((x)=>{return `Work: ${x} minutes`});
-            let breaks = intervals.breaks.map((x)=>{return `Break: ${x} minutes`});
-
-            for (i=0; i<work.length; i++){
-                 divs += `<div class="work">${work[i]}</div><div class="breaks"> ${breaks[i]}</div>`;
-            }
-            
-            displayIntDiv.innerHTML = divs;
-
-            //div that asks if edit or start pomodoro
-
-            //clear everything
-            this.inputs.classList.add('invisible'); //not overiding the inputs id display property
-            this.submit.classList.add('invisible');
-            this.addInput.classList.add('invisible');
-
-            //apend display div
-            this.el.appendChild(displayIntDiv);
-        }
         if (error){return};
 
         //save inputs into interval object
@@ -116,8 +92,46 @@
         
         this.intervals.work = work;
         this.intervals.breaks = breaks;
-        displayIntervals.bind(this)(this.intervals)
         
+        //start pomodoro
+        startPomo(this); //bind vs passing this?
+    }
+    //test----------
+    this.intervals =
+     {work:[6,7],
+    breaks:[2,3]}
+    startPomo(this);
+    /////----------
+    function startPomo(pomo){
+        //remove display
+            //if more elements are added to the starting UI in the future, this should probably be changed to a loop deleteing all of pomo.el.chilren
+        pomo.inputs.remove();
+        pomo.submit.remove();
+        pomo.addInput.remove(); 
+        
+        //set new displays
+          //grid container
+        pomo.pomoDisplay = document.createElement("div");
+        pomo.pomoDisplay.id = "pomo";
+        pomo.el.appendChild(pomo.pomoDisplay);
+        // timer
+        pomo.timerDisplay = document.createElement("div");
+        pomo.timerDisplay.id = "timerDisplay";
+        pomo.pomoDisplay.appendChild(pomo.timerDisplay);
+        // next intervals, contains intervals
+        pomo.intervalsDisplay = document.createElement("div");
+        pomo.intervalsDisplay.id = "intervals";
+        pomo.pomoDisplay.appendChild(pomo.intervalsDisplay);
+
+        //loop to make 
+
+
+        //time loop
+         //set work[0] time, 
+
+
+        //line up work[0], breaks[0], work[1], breaks[1]
+        pomo.intervals
     }
     function addEventListeners(){
         document.querySelectorAll(".addInput").forEach((x)=>x.addEventListener('click', addAfter));

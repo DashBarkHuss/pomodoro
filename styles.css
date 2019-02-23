@@ -15,6 +15,19 @@ html, body {
     height: 100%;
     align-content: center;
 }
+#pomo{
+    display: grid;
+    border: 1px solid rgb(255, 0, 234);
+    grid-column: 1 / 9;  
+}
+#timerDisplay{
+    border: 1px solid blue;
+}
+#intervals{
+    border: 1px solid paleturquoise;
+
+}
+
 #inputs{
     grid-column-start: 1;
     grid-column-end: 9;
@@ -41,9 +54,6 @@ html, body {
 }
 .addInput{
 
-}
-#timeDisplay{
-    border: 1px solid blue;
 }
 
 #submitIntervals{
