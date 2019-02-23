@@ -79,25 +79,29 @@
                 error = true;
             }
         }).bind(this)();
+
         //display inputs
         function displayIntervals(intervals){
             let displayIntDiv = document.createElement("div");
             displayIntDiv.id = "intervalsDisplay";
             let divs = "";
-            //work 0, break 0, work1, break 1
             let work = intervals.work.map((x)=>{return `Work: ${x} minutes`});
             let breaks = intervals.breaks.map((x)=>{return `Break: ${x} minutes`});
+
             for (i=0; i<work.length; i++){
-                 divs += `<div>${work[i]}</div><div> ${breaks[i]}</div>`;
+                 divs += `<div class="work">${work[i]}</div><div class="breaks"> ${breaks[i]}</div>`;
             }
             
             displayIntDiv.innerHTML = divs;
-            console.log(this);
-            console.log(displayIntDiv);
+
+            //div that asks if edit or start pomodoro
+
             //clear everything
             this.inputs.classList.add('invisible'); //not overiding the inputs id display property
             this.submit.classList.add('invisible');
             this.addInput.classList.add('invisible');
+
+            //apend display div
             this.el.appendChild(displayIntDiv);
         }
         if (error){return};
