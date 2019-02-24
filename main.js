@@ -5,7 +5,7 @@
         //create interval inputs
         this.inputs = document.createElement("div");
         this.inputs.id = "inputs";
-        this.inputs.innerHTML = "Sumbit Intervals";
+        this.inputs.innerHTML = "Submit Intervals in Minutes";
         this.el.appendChild(this.inputs);
 
         this.intervals={};
@@ -96,11 +96,22 @@
         //start pomodoro
         startPomo(this); //bind vs passing this?
     }
+    function calcInputs(){
+        this.inputValues = (()=>{
+            var array = [];
+            document.querySelectorAll(".input").forEach((x)=>{
+                if(x.value.length==0) return;
+                array.push(parseFloat(x.value));
+            });
+            return array;
+        })();
+        
+    }
     //test----------
-    this.intervals =
-     {work:[.09,.05],
-    breaks:[.05,.09]}
-    startPomo(this);
+    // this.intervals =
+    //  {work:[.09,.05],
+    // breaks:[.05,.09]}
+    // startPomo(this);
     /////----------
     function startPomo(pomo){
         //remove display
@@ -176,17 +187,6 @@
     
     addEventListeners();
     
-    function calcInputs(){
-        this.inputValues = (()=>{
-            var array = [];
-            document.querySelectorAll(".input").forEach((x)=>{
-                if(x.value.length==0) return;
-                array.push(parseInt(x.value));
-            });
-            return array;
-        })();
-        
-    }
 
     this.submit.addEventListener('click', submit.bind(this));
     
