@@ -22,12 +22,21 @@ html, body {
 }
 #timerDisplay{
     border: 1px solid blue;
+    display: flex;
+    justify-content: center;
 }
 #intervals{
     border: 1px solid paleturquoise;
-
+    display: flex;
+    justify-content: center;
 }
-
+.int{
+    border: 1px solid paleturquoise;
+    margin: 1%;
+}
+.currentInt{
+    background: yellow;
+}
 #inputs{
     grid-column-start: 1;
     grid-column-end: 9;

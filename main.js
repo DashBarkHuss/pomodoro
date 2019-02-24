@@ -98,8 +98,8 @@
     }
     //test----------
     this.intervals =
-     {work:[6,7],
-    breaks:[2,3]}
+     {work:[.09,.05],
+    breaks:[.05,.09]}
     startPomo(this);
     /////----------
     function startPomo(pomo){
@@ -122,11 +122,47 @@
         pomo.intervalsDisplay = document.createElement("div");
         pomo.intervalsDisplay.id = "intervals";
         pomo.pomoDisplay.appendChild(pomo.intervalsDisplay);
+        
+        //loop to make intervals in order
+        pomo.intervals.inOrder=[];
+        for (let i=0; i<pomo.intervals.work.length; i++){
+            pomo.intervals.inOrder.push(pomo.intervals.work[i], pomo.intervals.breaks[i]);
+        }
+        //loop to make interval divs
+        for (let i=0; i<pomo.intervals.inOrder.length; i++){
+            let interval = pomo.intervals.inOrder[i];
+            let isWork = i%2==0;
 
-        //loop to make 
-
-
+            pomo["int"+i] = document.createElement('div');
+            pomo["int"+i].className = isWork? "work":"breaks";
+            pomo["int"+i].classList.add("int");
+            pomo["int"+i].classList.add("int-"+(i+1));
+            pomo["int"+i].innerHTML = interval;
+            pomo.intervalsDisplay.appendChild(pomo["int"+i]);  
+        }
         //time loop
+        pomo.currentInt = 0;
+        let seconds;
+        setTimer()
+
+        function setTimer(){
+            let lastInterval = pomo.currentInt == pomo.intervals.inOrder.length;
+      
+            lastInterval? pomo.currentInt = 1 : pomo.currentInt += 1;
+            seconds = Math.round(pomo.intervals.inOrder[pomo.currentInt-1] * 60);
+            pomo.timerDisplay.innerHTML = seconds;
+            if(pomo.currentIntDiv)pomo.currentIntDiv.classList.remove("currentInt");
+            pomo.currentIntDiv = document.querySelector(".int-"+pomo.currentInt);
+            pomo.currentIntDiv.classList.add("currentInt");
+        }
+        function updateTimer(){
+            seconds -= 1;
+            pomo.timerDisplay.innerHTML = seconds;
+            console.log(seconds, pomo.timerDisplay.innerHTML);
+            if(seconds<=0) setTimer() ;
+        };
+        setInterval(updateTimer, 1000);
+        
          //set work[0] time, 
 
 
@@ -158,15 +194,7 @@
         //create pomodor with intervals
         // save intervals into an object that contains two arrays: work intervals and break intervals.
        
-        //start pomodoro 
-        function start(){
-            //removes input section and submit buttons, 
-            //create time display div
-            this.timeDisplay = document.createElement("div");
-            this.timeDisplay.id = "display";
-            this.timeDisplay.innerHTML = "display";
-            this.el.appendChild(this.timeDisplay);
-        }
+
         //puts time in time display div
         //creates control divs or calls controls which does that
         //loops: intervals.work[i], followed by intervals.break[i], reset i to 0 if it's the last i
