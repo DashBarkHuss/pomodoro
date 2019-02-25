@@ -107,12 +107,12 @@
         })();
         
     }
-    //test----------
-    // this.intervals =
-    //  {work:[.09,.05],
-    // breaks:[.05,.09]}
-    // startPomo(this);
-    /////----------
+    // test----------
+    this.intervals =
+     {work:[.09,.05],
+    breaks:[.05,.09]}
+    startPomo(this);
+    ///----------
     function startPomo(pomo){
         //remove display
             //if more elements are added to the starting UI in the future, this should probably be changed to a loop deleteing all of pomo.el.chilren
@@ -153,32 +153,98 @@
         }
         //time loop
         pomo.currentInt = 0;
+        pomo.isWork = function(){return pomo.currentInt%2 != 0;};
         let seconds;
         setTimer()
-
-        function setTimer(){
+        pomo.isPaused = false;
+        
+        //set timer to the start of a new interval
+        function setTimer(skip = null){
             let lastInterval = pomo.currentInt == pomo.intervals.inOrder.length;
-      
-            lastInterval? pomo.currentInt = 1 : pomo.currentInt += 1;
+            let firstInterval = pomo.currentInt == 1;
+            
+            if (skip == null || skip == "next") {
+                lastInterval? pomo.currentInt = 1 : pomo.currentInt += 1;
+                
+            } else {
+                firstInterval? pomo.currentInt = pomo.intervals.inOrder.length : pomo.currentInt -= 1;
+            }
+            if(skip != null){clearInterval(timer); timer = setInterval(updateTimer, 1000);}
+            
             seconds = Math.round(pomo.intervals.inOrder[pomo.currentInt-1] * 60);
             pomo.timerDisplay.innerHTML = seconds;
             if(pomo.currentIntDiv)pomo.currentIntDiv.classList.remove("currentInt");
             pomo.currentIntDiv = document.querySelector(".int-"+pomo.currentInt);
             pomo.currentIntDiv.classList.add("currentInt");
         }
+
+        //make the timer go down in seconds
         function updateTimer(){
+            if (pomo.isPaused) return;
+
             seconds -= 1;
             pomo.timerDisplay.innerHTML = seconds;
-            console.log(seconds, pomo.timerDisplay.innerHTML);
-            if(seconds<=0) setTimer() ;
+
+            if(seconds<=0) { //if timer is done 'ding' and set timer to next interval
+                //temporarily turned off sound pomo.isWork()? document.querySelector(".tom").play() : document.querySelector(".tink").play();
+                setTimer() ;
+            }
         };
-        setInterval(updateTimer, 1000);
+
+        //run timer
+        let timer = setInterval(updateTimer, 1000);
+
+        //controls
+        //-create control divs
+        //--controls container
+        pomo.controlsDiv = document.createElement("div");
+        pomo.controlsDiv.id = "controls";
+        pomo.pomoDisplay.appendChild(pomo.controlsDiv);
         
-         //set work[0] time, 
+        //--back div
+        pomo.back = document.createElement("div");
+        pomo.back.id = "back";
+        pomo.back.innerHTML = "⏮️";
+        pomo.controlsDiv.appendChild(pomo.back);
+        
+        //--play/pause div
+        pomo.playPause = document.createElement("div");
+        pomo.playPause.id = "playPause";
+        pomo.playPause.innerHTML = "| |";
+        pomo.controlsDiv.appendChild(pomo.playPause);
+        
+        //--next div
+        pomo.next = document.createElement("div");
+        pomo.next.id = "next";
+        pomo.next.innerHTML = "⏭️";
+        pomo.controlsDiv.appendChild(pomo.next);
+        
+        //--unmuteMute div ------------------------------------left off here
+        // pomo.unmuteMute = document.createElement("div");
+        // pomo.unmuteMute.id = "unmuteMute";
+        // pomo.unmuteMute.innerHTML = "sound icon";
+        // pomo.controlsDiv.appendChild(pomo.unmuteMute);
 
+        //-controls functions
+        //--playPause
+        function playPause(){
+            pomo.isPaused = !pomo.isPaused;
+            pomo.playPause.innerHTML = pomo.isPaused? "▶": "| |";
+        }
 
-        //line up work[0], breaks[0], work[1], breaks[1]
-        pomo.intervals
+        //--next 
+        function next(){
+            setTimer("next");
+        }
+        
+        //--back 
+        function back(){
+            setTimer("back");
+        }
+        //-controls events
+        pomo.playPause.addEventListener('click', playPause);
+        pomo.next.addEventListener('click', next);
+        pomo.back.addEventListener('click', back);
     }
     function addEventListeners(){
         document.querySelectorAll(".addInput").forEach((x)=>x.addEventListener('click', addAfter));
