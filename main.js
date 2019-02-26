@@ -185,8 +185,9 @@
             seconds -= 1;
             pomo.timerDisplay.innerHTML = seconds;
 
-            if(seconds<=0) { //if timer is done 'ding' and set timer to next interval
-                //temporarily turned off sound pomo.isWork()? document.querySelector(".tom").play() : document.querySelector(".tink").play();
+            if(seconds<=0) { //if timer is done then 'ding' and set timer to next interval
+                console.log("play()")
+                pomo.isWork()? document.querySelector(".tom").play() : document.querySelector(".tink").play();
                 setTimer() ;
             }
         };
@@ -219,17 +220,25 @@
         pomo.next.innerHTML = "⏭️";
         pomo.controlsDiv.appendChild(pomo.next);
         
-        //--unmuteMute div ------------------------------------left off here
-        // pomo.unmuteMute = document.createElement("div");
-        // pomo.unmuteMute.id = "unmuteMute";
-        // pomo.unmuteMute.innerHTML = "sound icon";
-        // pomo.controlsDiv.appendChild(pomo.unmuteMute);
+        pomo.isMute = false;
+        //--muteUnmute div 
+        pomo.muteUnmute = document.createElement("div");
+        pomo.muteUnmute.id = "muteUnmute";
+        pomo.muteUnmute.innerHTML = "🔊";
+        pomo.controlsDiv.appendChild(pomo.muteUnmute);
 
         //-controls functions
         //--playPause
         function playPause(){
             pomo.isPaused = !pomo.isPaused;
             pomo.playPause.innerHTML = pomo.isPaused? "▶": "| |";
+        }
+       
+        //--mute unmute
+        function muteUnmute(){
+            pomo.isMute = !pomo.isMute;
+            pomo.muteUnmute.innerHTML = !pomo.isMute? "🔊":"🔇";
+            document.querySelectorAll("audio").forEach(x=>x.muted=!x.muted);
         }
 
         //--next 
@@ -245,6 +254,7 @@
         pomo.playPause.addEventListener('click', playPause);
         pomo.next.addEventListener('click', next);
         pomo.back.addEventListener('click', back);
+        pomo.muteUnmute.addEventListener('click', muteUnmute);
     }
     function addEventListeners(){
         document.querySelectorAll(".addInput").forEach((x)=>x.addEventListener('click', addAfter));

@@ -86,7 +86,7 @@ html, body {
     align-items: center
 }
 #controls  > *{
-    margin:1%;
+    cursor:pointer;
 }
 
 #playPause{
@@ -98,5 +98,8 @@ html, body {
 
 }
 #back{
+    border: 1px solid rgb(94, 205, 90);
+}
+#muteUnmute{
     border: 1px solid rgb(94, 205, 90);
 }
