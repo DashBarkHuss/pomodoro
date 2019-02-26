@@ -24,6 +24,7 @@ html, body {
     border: 1px solid blue;
     display: flex;
     justify-content: center;
+    cursor: default;
 }
 #intervals{
     border: 1px solid paleturquoise;
@@ -33,6 +34,7 @@ html, body {
 .int{
     border: 1px solid paleturquoise;
     margin: 1%;
+    cursor: default;
 }
 .currentInt{
     background: yellow;
