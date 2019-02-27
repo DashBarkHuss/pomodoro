@@ -2,117 +2,144 @@
     //Pomodoro
     var Pomodoro = function(el){
         this.el = document.getElementById(el);
-        //create interval inputs
-        this.inputs = document.createElement("div");
-        this.inputs.id = "inputs";
-        this.inputs.innerHTML = "Submit Intervals in Minutes";
-        this.el.appendChild(this.inputs);
 
-        this.intervals={};
-        
-        function createInput(numberOfInputs = 1){ //refactor this to make two inputs with .work class and .breaks
-            let elems = document.createDocumentFragment();
-            for (var i = 0; i<numberOfInputs; i++){
-                let input = makeElem("input", "input");
-                let removeInput = makeElem("button", "removeInput", "-");
-                let addInput = makeElem("button", "addInput", "+");
-                elems.append(input, removeInput, addInput);
+        //create interval inputs__________________________________
+        //________________________________________________________
+        function inputForm(pomo = this){
+            pomo.inputs = document.createElement("div");
+            pomo.inputs.id = "inputs";
+            pomo.inputs.innerHTML = "Submit Intervals in Minutes";
+            pomo.el.appendChild(pomo.inputs);
+
+            
+            function createInput(numberOfInputs = 1){ //refactor this to make two inputs with .work class and .breaks
+                let elems = document.createDocumentFragment();
+                for (var i = 0; i<numberOfInputs; i++){
+                    let input = makeElem("input", "input");
+                    let removeInput = makeElem("button", "removeInput", "-");
+                    let addInput = makeElem("button", "addInput", "+");
+                    elems.append(input, removeInput, addInput);
+                }
+                return elems;
             }
-            return elems;
-        }
-        
-        //makes any element
-        function makeElem(type, className, text=""){
-            let elem = document.createElement(type);
-            elem.className = className;
-            elem.innerHTML = text;
-            return elem
-        }
-        
-        //start with two input elements
-        this.inputs.append(createInput(2));
-        
-        
-        //create submit button
-        this.submit = document.createElement("button");
-        this.submit.id = "submitIntervals";
-        this.submit.innerHTML = "submit";
-        this.el.appendChild(this.submit);
-        
-        //create lower add button
-        this.addInput = document.createElement("button");
-        this.addInput.id = "addInput";
-        this.addInput.innerHTML = "add";
-        this.el.appendChild(this.addInput);
-        
-        // lower add button input
-        this.addInput.addEventListener('click', ()=>{
-            this.inputs.append(createInput());
-            addEventListeners();
-        });
-        
-        //add Input after this input 
-        function addAfter(e){
-            this.parentElement.insertBefore(createInput(), this.nextSibling);  
-            addEventListeners();
-        };
-        //removeInput
-        function remove(e){ //this function wouldn't work if the html order was switched
-        this.nextSibling.remove();
-        this.previousSibling.remove();
-        this.remove();
-    }
-
-    //get intervals on submit
-    function submit(){
-        //get inputs
-        calcInputs.bind(this)();
-
-        //validate inputs
-        let error = false;
-        const validate = (function(){
-            if(this.inputValues.length == 0){
-                alert('You must submit atleast one work interval and one break interval.'); 
-                error = true;
-            }else if (this.inputValues.length%2!=0){
-                alert(`Must have one break after work session of ${this.inputValues[this.inputValues.length-1]} minutes.`); 
-                error = true;
+            
+            //makes any element
+            function makeElem(type, className, text=""){
+                let elem = document.createElement(type);
+                elem.className = className;
+                elem.innerHTML = text;
+                return elem
             }
-        }).bind(this)();
-
-        if (error){return};
-
-        //save inputs into interval object
-        let work = this.inputValues.filter((x,i)=>{
-            return i%2 ==0;
-        });
-        let breaks = this.inputValues.filter((x,i)=>{
-            return i%2 !=0;
-        });
-        
-        this.intervals.work = work;
-        this.intervals.breaks = breaks;
-        
-        //start pomodoro
-        startPomo(this); //bind vs passing this?
-    }
-    function calcInputs(){
-        this.inputValues = (()=>{
-            var array = [];
-            document.querySelectorAll(".input").forEach((x)=>{
-                if(x.value.length==0) return;
-                array.push(parseFloat(x.value));
+            
+            //start with two input elements
+            
+            
+            if (pomo.intervals){
+                pomo.inputs.append(createInput(pomo.intervals.inOrder.length));
+                for (i = 0; i < pomo.intervals.inOrder.length; i++){
+                    pomo.inputs.querySelectorAll(".input")[i].value = pomo.intervals.inOrder[i];
+                }
+            } else {
+                pomo.intervals={};
+                pomo.inputs.append(createInput(2));
+            }
+            
+            
+            //create submit button
+            pomo.submit = document.createElement("button");
+            pomo.submit.id = "submitIntervals";
+            pomo.submit.innerHTML = "submit";
+            pomo.el.appendChild(pomo.submit);
+            
+            //create lower add button
+            pomo.addInput = document.createElement("button");
+            pomo.addInput.id = "addInput";
+            pomo.addInput.innerHTML = "add";
+            pomo.el.appendChild(pomo.addInput);
+            
+            // lower add button input
+            pomo.addInput.addEventListener('click', ()=>{
+                this.inputs.append(createInput());
+                addEventListeners();
             });
-            return array;
-        })();
-        
+            
+            //add Input after this input 
+            function addAfter(e){
+                this.parentElement.insertBefore(createInput(), this.nextSibling);  
+                addEventListeners();
+            };
+            //removeInput
+            function remove(e){ //this function wouldn't work if the html order was switched
+            this.nextSibling.remove();
+            this.previousSibling.remove();
+            this.remove();
+        }
+
+        //get intervals on submit
+        function submit(){
+            //get inputs
+            calcInputs();
+
+            //validate inputs
+            let error = false;
+            const validate = (function(){
+                if(pomo.inputValues.length == 0){
+                    alert('You must submit atleast one work interval and one break interval.'); 
+                    error = true;
+                }else if (pomo.inputValues.length%2!=0){
+                    alert(`Must have one break after work session of ${pomo.inputValues[pomo.inputValues.length-1]} minutes.`); 
+                    error = true;
+                }
+            })();
+
+            if (error){return};
+
+            //save inputs into interval object
+            let work = pomo.inputValues.filter((x,i)=>{
+                return i%2 ==0;
+            });
+            let breaks = pomo.inputValues.filter((x,i)=>{
+                return i%2 !=0;
+            });
+            
+            pomo.intervals.work = work;
+            pomo.intervals.breaks = breaks;
+            
+            //start pomodoro
+            startPomo(pomo); //bind vs passing this?
+        }
+        function calcInputs(){
+            pomo.inputValues = (()=>{
+                var array = [];
+                document.querySelectorAll(".input").forEach((x)=>{
+                    if(x.value.length==0) return;
+                    array.push(parseFloat(x.value));
+                });
+                return array;
+            })();
+            
+        }
+
+        addEventListeners();
+        function addEventListeners(){
+            document.querySelectorAll(".addInput").forEach((x)=>x.addEventListener('click', addAfter));
+            document.querySelectorAll(".removeInput").forEach((x)=>x.addEventListener('click', remove));
+        }   
+
+        pomo.submit.addEventListener('click', submit.bind(this));
     }
-    // test----------
-    this.intervals =
-     {work:[.09,.05],
-    breaks:[.05,.09]}
-    startPomo(this);
+
+    inputForm(this);
+
+    // __________________________test________________________________________
+    // this.intervals =
+    //  {work:[.09,.05],
+    // breaks:[.05,.09]}
+    // startPomo(this);
     ///----------
+
+    //start pomo________________________________________________
+    //___________________________________________________________
     function startPomo(pomo){
         //remove display
             //if more elements are added to the starting UI in the future, this should probably be changed to a loop deleteing all of pomo.el.chilren
@@ -180,7 +207,8 @@
             if(skip != null){clearInterval(timer); timer = setInterval(updateTimer, 1000);}
             
             seconds = Math.round(pomo.intervals.inOrder[pomo.currentInt-1] * 60);
-            pomo.timerDisplay.innerHTML = seconds;
+            pomo.timerDisplay.innerHTML = makeSecondsReadable(seconds);
+            debugger;
             if(pomo.currentIntDiv)pomo.currentIntDiv.classList.remove("currentInt");
             pomo.currentIntDiv = document.querySelector(".int-"+pomo.currentInt);
             pomo.currentIntDiv.classList.add("currentInt");
@@ -191,7 +219,7 @@
             if (pomo.isPaused) return;
 
             seconds -= 1;
-            pomo.timerDisplay.innerHTML = seconds;
+            pomo.timerDisplay.innerHTML = makeSecondsReadable(seconds);
 
             if(seconds<=0) { //if timer is done then 'ding' and set timer to next interval
                 console.log("play()")
@@ -199,6 +227,13 @@
                 setTimer() ;
             }
         };
+
+        //seconds to readable time 
+        function makeSecondsReadable(seconds){
+            let extra0;
+            `${180%60}`.length == 1 ? extra0 = "0" : extra0 = "";//adding an extra zero when not needed
+            return `${Math.floor(seconds / 60)}:${seconds%60}${extra0}`;
+        }
 
         //run timer
         let timer = setInterval(updateTimer, 1000);
@@ -261,8 +296,16 @@
         
         //--edit
         function edit(){
-            pomo.intervals.inOrder; //these need to go into the start.
-            debugger;
+            clearInterval(timer) //or pause?
+            
+    
+            for (i=0; i<pomo.pomoDisplay.children.length; i++){
+                
+                pomo.pomoDisplay.children[i].remove();
+            };
+
+            pomo.pomoDisplay.remove();
+            inputForm(pomo, pomo.intervals.inOrder) //these need to go into the start.
         }
         //-controls events
         pomo.playPause.addEventListener('click', playPause);
@@ -271,24 +314,8 @@
         pomo.muteUnmute.addEventListener('click', muteUnmute);
         pomo.editButton.addEventListener('click', edit);
     }
-    function addEventListeners(){
-        document.querySelectorAll(".addInput").forEach((x)=>x.addEventListener('click', addAfter));
-        document.querySelectorAll(".removeInput").forEach((x)=>x.addEventListener('click', remove));
-    }   
-    
-    addEventListeners();
     
 
-    this.submit.addEventListener('click', submit.bind(this));
-    
-    
-        //create pomodor with intervals
-        // save intervals into an object that contains two arrays: work intervals and break intervals.
-       
-
-        //puts time in time display div
-        //creates control divs or calls controls which does that
-        //loops: intervals.work[i], followed by intervals.break[i], reset i to 0 if it's the last i
     };
 //controls
     window.Pomodoro = Pomodoro;
