@@ -105,3 +105,9 @@ html, body {
 #muteUnmute{
     border: 1px solid rgb(94, 205, 90);
 }
+#editButton{
+    border: 1px solid rgb(236, 202, 9);
+    width: 120px;
+    justify-self: center;
+    background: pink;
+}

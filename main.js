@@ -125,10 +125,18 @@
         pomo.pomoDisplay = document.createElement("div");
         pomo.pomoDisplay.id = "pomo";
         pomo.el.appendChild(pomo.pomoDisplay);
-        // timer
+
+        //edit
+        pomo.editButton = document.createElement("button");
+        pomo.editButton.id = "editButton";
+        pomo.editButton.innerHTML = "Edit";
+        pomo.pomoDisplay.appendChild(pomo.editButton);
+        
+        // timereditButton
         pomo.timerDisplay = document.createElement("div");
         pomo.timerDisplay.id = "timerDisplay";
         pomo.pomoDisplay.appendChild(pomo.timerDisplay);
+
         // next intervals, contains intervals
         pomo.intervalsDisplay = document.createElement("div");
         pomo.intervalsDisplay.id = "intervals";
@@ -250,11 +258,18 @@
         function back(){
             setTimer("back");
         }
+        
+        //--edit
+        function edit(){
+            pomo.intervals.inOrder; //these need to go into the start.
+            debugger;
+        }
         //-controls events
         pomo.playPause.addEventListener('click', playPause);
         pomo.next.addEventListener('click', next);
         pomo.back.addEventListener('click', back);
         pomo.muteUnmute.addEventListener('click', muteUnmute);
+        pomo.editButton.addEventListener('click', edit);
     }
     function addEventListeners(){
         document.querySelectorAll(".addInput").forEach((x)=>x.addEventListener('click', addAfter));
