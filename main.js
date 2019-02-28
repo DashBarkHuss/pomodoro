@@ -132,10 +132,10 @@
     inputForm(this);
 
     // __________________________test________________________________________
-    // this.intervals =
-    //  {work:[1.1,.05],
-    // breaks:[.05,.09]}
-    // startPomo(this);
+    this.intervals =
+     {work:[1.1,.05],
+    breaks:[.05,.09]}
+    startPomo(this);
     ///----------
 
     //start pomo________________________________________________
@@ -159,11 +159,11 @@
         pomo.editButton.innerHTML = "Edit";
         pomo.pomoDisplay.appendChild(pomo.editButton);
         
-        // timereditButton
+        // timer display
         pomo.timerDisplay = document.createElement("div");
         pomo.timerDisplay.id = "timerDisplay";
         pomo.pomoDisplay.appendChild(pomo.timerDisplay);
-
+        
         // next intervals, contains intervals
         pomo.intervalsDisplay = document.createElement("div");
         pomo.intervalsDisplay.id = "intervals";
@@ -222,7 +222,7 @@
 
             if(seconds<=0) { //if timer is done then 'ding' and set timer to next interval
                 console.log("play()")
-                pomo.isWork()? document.querySelector(".tom").play() : document.querySelector(".tink").play();
+                //mute pomo.isWork()? document.querySelector(".tom").play() : document.querySelector(".tink").play();
                 setTimer() ;
             }
         };

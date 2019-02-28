@@ -2,6 +2,7 @@ html, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 *, *:before, *:after {
     box-sizing: inherit;
@@ -16,23 +17,33 @@ html, body {
     align-content: center;
 }
 #pomo{
+    border: 1px solid palevioletred;
     display: grid;
-    border: 1px solid rgb(255, 0, 234);
-    grid-column: 1 / 9;  
+    grid-column: 3 / 7;
+    grid-gap: 10px;
 }
 #timerDisplay{
-    border: 1px solid blue;
+    /* background-color: purple; */
+    background-image: linear-gradient(to right, rgba(0, 126, 255, 0.86) , rgb(152, 4, 228));
+    color: rgb(222, 246, 249);
+    text-shadow: 2px 2px 5px #503998;
+    box-shadow: 2px 2px 5px #503998;
     display: flex;
     justify-content: center;
     cursor: default;
+    font-size: 5em;
+    border-radius: 10px;
+    margin: 0 30%;
+    /* grid-column: 3/6; */
 }
+
+
+
 #intervals{
-    border: 1px solid paleturquoise;
     display: flex;
     justify-content: center;
 }
 .int{
-    border: 1px solid paleturquoise;
     margin: 1%;
     cursor: default;
 }
@@ -50,7 +61,7 @@ html, body {
 }
 .invisible{
     display: none;
-    border: 1px solid blue; 
+
 }
 #inputs.invisible {
     display: none;
@@ -82,32 +93,31 @@ html, body {
 }
 
 #controls{
-    border: 1px solid orange;
-    display: flex;
-    justify-content: center;
-    align-items: center
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-row: 3/4;
+    grid-template-columns: repeat(10, 1fr);
 }
 #controls  > *{
     cursor:pointer;
 }
 
 #playPause{
-    border: 1px solid slateblue;
 }
 
 #next{
-    border: 1px solid rgb(205, 90, 186);
+
 
 }
 #back{
-    border: 1px solid rgb(94, 205, 90);
+    grid-column-start: 4;
 }
 #muteUnmute{
-    border: 1px solid rgb(94, 205, 90);
+
 }
 #editButton{
     border: 1px solid rgb(236, 202, 9);
-    width: 120px;
-    justify-self: center;
+    justify-self: end;
     background: pink;
 }
