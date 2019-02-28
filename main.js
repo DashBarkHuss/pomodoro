@@ -133,7 +133,7 @@
 
     // __________________________test________________________________________
     // this.intervals =
-    //  {work:[.09,.05],
+    //  {work:[1.1,.05],
     // breaks:[.05,.09]}
     // startPomo(this);
     ///----------
@@ -208,7 +208,6 @@
             
             seconds = Math.round(pomo.intervals.inOrder[pomo.currentInt-1] * 60);
             pomo.timerDisplay.innerHTML = makeSecondsReadable(seconds);
-            debugger;
             if(pomo.currentIntDiv)pomo.currentIntDiv.classList.remove("currentInt");
             pomo.currentIntDiv = document.querySelector(".int-"+pomo.currentInt);
             pomo.currentIntDiv.classList.add("currentInt");
@@ -231,8 +230,8 @@
         //seconds to readable time 
         function makeSecondsReadable(seconds){
             let extra0;
-            `${180%60}`.length == 1 ? extra0 = "0" : extra0 = "";//adding an extra zero when not needed
-            return `${Math.floor(seconds / 60)}:${seconds%60}${extra0}`;
+            `${seconds%60}`.length == 1 ? extra0 = "0" : extra0 = "";
+            return `${Math.floor(seconds / 60)}:${extra0}${seconds%60}`;
         }
 
         //run timer
