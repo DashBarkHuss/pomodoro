@@ -24,6 +24,8 @@ html, body {
 }
 #timerDisplay{
     /* background-color: purple; */
+    border-radius: 10px;
+    margin: 0 30%;
     background-image: linear-gradient(to right, rgba(0, 126, 255, 0.86) , rgb(152, 4, 228));
     color: rgb(222, 246, 249);
     text-shadow: 2px 2px 5px #503998;
@@ -32,8 +34,6 @@ html, body {
     justify-content: center;
     cursor: default;
     font-size: 5em;
-    border-radius: 10px;
-    margin: 0 30%;
     /* grid-column: 3/6; */
 }
 
