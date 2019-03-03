@@ -172,7 +172,6 @@
         //loop to make intervals in order
         pomo.intervals.inOrder=[];
         for (let i=0; i<pomo.intervals.work.length; i++){
-            
             pomo.intervals.inOrder.push(pomo.intervals.work[i], pomo.intervals.breaks[i]);
         }
         //loop to make interval divs
@@ -184,7 +183,7 @@
             pomo["int"+i].className = isWork? "work":"breaks";
             pomo["int"+i].classList.add("int");
             pomo["int"+i].classList.add("int-"+(i+1));
-            pomo["int"+i].innerHTML = interval;
+            pomo["int"+i].innerHTML = makeSecondsReadable(interval*60);
             pomo.intervalsDisplay.appendChild(pomo["int"+i]);  
         }
         //time loop
@@ -207,7 +206,7 @@
             }
             if(skip != null){clearInterval(timer); timer = setInterval(updateTimer, 1000);}
             
-            seconds = Math.round(pomo.intervals.inOrder[pomo.currentInt-1] * 60);
+            seconds = pomo.intervals.inOrder[pomo.currentInt-1] * 60;
             pomo.timerDisplay.innerHTML = makeSecondsReadable(seconds);
             if(pomo.currentIntDiv)pomo.currentIntDiv.classList.remove("currentInt");
             pomo.currentIntDiv = document.querySelector(".int-"+pomo.currentInt);
@@ -230,6 +229,7 @@
 
         //seconds to readable time 
         function makeSecondsReadable(seconds){
+            seconds = Math.round(seconds);
             let extra0;
             `${seconds%60}`.length == 1 ? extra0 = "0" : extra0 = "";
             return `${Math.floor(seconds / 60)}:${extra0}${seconds%60}`;
