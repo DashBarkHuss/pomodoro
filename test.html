@@ -7,17 +7,31 @@
     <title>Document</title>
     <style>
 
-    #gradient_div{
-    background-image: url('test.jpeg');
-    /* background-image: linear-gradient(to right, rgba(0, 126, 255, 0.86) , rgb(152, 4, 228)); */
-    height: 100px;
-    margin: 0 1%;
-    border: 1px solid black;
+    #intervals{
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid blue;
     }
+    #intervals>*{
+    margin: .3%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    line-height: 40px;
+    text-align: center;
+    background-size: 101% 100%;
+    background-image: linear-gradient(to right, rgba(0, 126, 255, 0.86) , rgb(152, 4, 228));
+    color: rgb(222, 246, 249);
+    text-shadow: 2px 2px 5px #503998;
+    box-shadow: 2px 2px 5px #503998;
+    }
+
     </style>
 </head>
 <body>
- <div id="gradient_div"></div>
+        <div id="intervals"><div class="work int int-1 currentInt">1.1</div><div class="breaks int int-2">0.05</div><div class="work int int-3">0.05</div><div class="breaks int int-4">0.09</div></div>
 </body>
 </html>
 

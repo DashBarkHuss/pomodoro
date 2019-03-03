@@ -164,7 +164,7 @@
         pomo.timerDisplay.id = "timerDisplay";
         pomo.pomoDisplay.appendChild(pomo.timerDisplay);
         
-        // next intervals, contains intervals
+        // intervals, contains intervals
         pomo.intervalsDisplay = document.createElement("div");
         pomo.intervalsDisplay.id = "intervals";
         pomo.pomoDisplay.appendChild(pomo.intervalsDisplay);
@@ -172,6 +172,7 @@
         //loop to make intervals in order
         pomo.intervals.inOrder=[];
         for (let i=0; i<pomo.intervals.work.length; i++){
+            
             pomo.intervals.inOrder.push(pomo.intervals.work[i], pomo.intervals.breaks[i]);
         }
         //loop to make interval divs
@@ -247,39 +248,39 @@
         //--back div
         pomo.back = document.createElement("div");
         pomo.back.id = "back";
-        pomo.back.innerHTML = "⏮️";
+        pomo.back.innerHTML = "<<";
         pomo.controlsDiv.appendChild(pomo.back);
         
         //--play/pause div
         pomo.playPause = document.createElement("div");
         pomo.playPause.id = "playPause";
-        pomo.playPause.innerHTML = "| |";
+        pomo.playPause.innerHTML = "||";
         pomo.controlsDiv.appendChild(pomo.playPause);
         
         //--next div
         pomo.next = document.createElement("div");
         pomo.next.id = "next";
-        pomo.next.innerHTML = "⏭️";
+        pomo.next.innerHTML = ">>";
         pomo.controlsDiv.appendChild(pomo.next);
         
         pomo.isMute = false;
         //--muteUnmute div 
         pomo.muteUnmute = document.createElement("div");
         pomo.muteUnmute.id = "muteUnmute";
-        pomo.muteUnmute.innerHTML = "🔊";
+        pomo.muteUnmute.innerHTML = "mute";
         pomo.controlsDiv.appendChild(pomo.muteUnmute);
 
         //-controls functions
         //--playPause
         function playPause(){
             pomo.isPaused = !pomo.isPaused;
-            pomo.playPause.innerHTML = pomo.isPaused? "▶": "| |";
+            pomo.playPause.innerHTML = pomo.isPaused? "▶": "||";
         }
        
         //--mute unmute
         function muteUnmute(){
             pomo.isMute = !pomo.isMute;
-            pomo.muteUnmute.innerHTML = !pomo.isMute? "🔊":"🔇";
+            pomo.muteUnmute.innerHTML = !pomo.isMute? "mute":"unmute";
             document.querySelectorAll("audio").forEach(x=>x.muted=!x.muted);
         }
 

@@ -15,9 +15,11 @@ html, body {
     grid-gap: 10px;
     height: 100%;
     align-content: center;
+    background-image: linear-gradient(to right, rgba(0, 96, 194, 0.86) , rgb(146, 0, 222));
+    color: rgb(222, 246, 249);
 }
+
 #pomo{
-    border: 1px solid palevioletred;
     display: grid;
     grid-column: 3 / 7;
     grid-gap: 10px;
@@ -26,10 +28,11 @@ html, body {
     /* background-color: purple; */
     border-radius: 10px;
     margin: 0 30%;
+    background-size: 101% 100%;
     background-image: linear-gradient(to right, rgba(0, 126, 255, 0.86) , rgb(152, 4, 228));
     color: rgb(222, 246, 249);
     text-shadow: 2px 2px 5px #503998;
-    box-shadow: 2px 2px 5px #503998;
+    box-shadow: 2px 2px 5px #422a8f;
     display: flex;
     justify-content: center;
     cursor: default;
@@ -37,18 +40,50 @@ html, body {
     /* grid-column: 3/6; */
 }
 
-
-
 #intervals{
     display: flex;
+    justify-items: center;
     justify-content: center;
-}
+    align-items: center;
+    }
+
 .int{
-    margin: 1%;
+    margin: 2%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    line-height: 40px;
+    text-align: center;
+    background: #7349ff;
+    color: rgb(252, 252, 252);
+    text-shadow: 2px 2px 5px #503998;
     cursor: default;
 }
 .currentInt{
-    background: yellow;
+    background: #fff;
+    color: #7248fe;
+    text-shadow: aliceblue;
+    text-shadow: 2px 2px 5px #a88eff;
+    box-shadow: 2px 2px 5px #422a8f;
+}
+input{
+    font-size: 2em;
+    border-radius: 10px;
+    border:none;
+    color: #838ac6e6;
+}
+button{
+    font-size: 1em;
+    border-radius: 6px;
+    border:none;
+    color: #4c3aba;
+    background: #fff;
+    box-shadow: 2px 2px 5px #422a8f;
+}
+button:active{
+   
+    background: rgb(113, 144, 245);
+
 }
 #inputs{
     grid-column-start: 1;
@@ -98,6 +133,7 @@ html, body {
     align-items: center;
     grid-row: 3/4;
     grid-template-columns: repeat(10, 1fr);
+    height: 20px;
 }
 #controls  > *{
     cursor:pointer;
@@ -117,7 +153,5 @@ html, body {
 
 }
 #editButton{
-    border: 1px solid rgb(236, 202, 9);
     justify-self: end;
-    background: pink;
 }
