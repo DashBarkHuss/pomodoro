@@ -39,7 +39,9 @@ html, body {
     font-size: 5em;
     /* grid-column: 3/6; */
 }
-
+#timerDisplay.break{
+background-image: linear-gradient(to right, rgba(0, 231, 255, 0.86) , rgb(4, 228, 187))
+}
 #intervals{
     display: flex;
     justify-items: center;

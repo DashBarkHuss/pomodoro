@@ -132,10 +132,10 @@
     inputForm(this);
 
     // __________________________test________________________________________
-    this.intervals =
-     {work:[1.1,.05],
-    breaks:[.05,.09]}
-    startPomo(this);
+    // this.intervals =
+    //  {work:[1.1,.05],
+    // breaks:[.05,.09]}
+    // startPomo(this);
     ///----------
 
     //start pomo________________________________________________
@@ -211,6 +211,15 @@
             if(pomo.currentIntDiv)pomo.currentIntDiv.classList.remove("currentInt");
             pomo.currentIntDiv = document.querySelector(".int-"+pomo.currentInt);
             pomo.currentIntDiv.classList.add("currentInt");
+            
+            //ui/css for work vs break
+            if(pomo.isWork()){
+                pomo.timerDisplay.classList.remove("break");
+            } else {
+                pomo.timerDisplay.classList.add("break");
+
+            }
+            
         }
 
         //make the timer go down in seconds
@@ -222,7 +231,7 @@
 
             if(seconds<=0) { //if timer is done then 'ding' and set timer to next interval
                 console.log("play()")
-                //mute pomo.isWork()? document.querySelector(".tom").play() : document.querySelector(".tink").play();
+                pomo.isWork()? document.querySelector(".tom").play() : document.querySelector(".tink").play();
                 setTimer() ;
             }
         };
